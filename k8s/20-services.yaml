@@ -33,3 +33,11 @@ spec:
       containers:
       - name: base
         image: {{image "../services/base/Dockerfile"}}
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: base
+spec:
+  prefix: /base/
+  service: base
