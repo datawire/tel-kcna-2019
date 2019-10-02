@@ -41,3 +41,45 @@ metadata:
 spec:
   prefix: /base/
   service: base
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python
+  labels:
+    app: python
+spec:
+  selector:
+    app: python
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python
+  labels:
+    app: python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python
+  template:
+    metadata:
+      labels:
+        app: python
+    spec:
+      containers:
+      - name: python
+        image: {{image "../services/python/Dockerfile"}}
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: python
+spec:
+  prefix: /python/
+  service: python
