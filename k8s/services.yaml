@@ -1,0 +1,35 @@
+# @TEMPLATE@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: base
+  labels:
+    app: base
+spec:
+  selector:
+    app: base
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: base
+  labels:
+    app: base
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: base
+  template:
+    metadata:
+      labels:
+        app: base
+    spec:
+      containers:
+      - name: base
+        image: {{image "../services/base/Dockerfile"}}
