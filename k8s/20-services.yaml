@@ -87,3 +87,47 @@ metadata:
 spec:
   prefix: /python/
   service: python
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go
+  labels:
+    app: go
+spec:
+  selector:
+    app: go
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go
+  labels:
+    app: go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go
+  template:
+    metadata:
+      labels:
+        app: go
+    spec:
+      containers:
+      - name: go
+        image: {{image "../services/go/Dockerfile"}}
+        ports:
+          - containerPort: 8000
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: go
+spec:
+  prefix: /go/
+  service: go
