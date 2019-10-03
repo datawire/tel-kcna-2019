@@ -32,6 +32,8 @@ spec:
       containers:
       - name: __NAME__
         image: {{image "../services/__NAME__/Dockerfile"}}
+        ports:
+          - containerPort: 8000
 ---
 apiVersion: getambassador.io/v1
 kind: Mapping
