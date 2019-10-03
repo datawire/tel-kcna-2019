@@ -3,5 +3,5 @@
 - [x] Dockerfile to build base
 - [x] script to build all Dockerfiles
 - [x] script to deploy all images to cluster
-- [ ] Ambassador setup in cluster
+- [x] Ambassador setup in cluster
 - [ ] More services
