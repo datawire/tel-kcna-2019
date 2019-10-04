@@ -1,8 +1,12 @@
 [package]
-name = "rust"
+name = "app"
 version = "0.1.0"
 authors = ["Abhay Saxena <ark3@datawire.io>"]
 edition = "2018"
 
 [dependencies]
+base64 = "0.10.1"
+chrono = "0.4.9"
+gethostname = "0.2.0"
 rocket = "0.4.2"
+reqwest = "0.9.20"

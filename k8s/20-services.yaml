@@ -219,3 +219,47 @@ metadata:
 spec:
   prefix: /node/
   service: node
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rust
+  labels:
+    app: rust
+spec:
+  selector:
+    app: rust
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rust
+  labels:
+    app: rust
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rust
+  template:
+    metadata:
+      labels:
+        app: rust
+    spec:
+      containers:
+      - name: rust
+        image: {{image "../services/rust/Dockerfile"}}
+        ports:
+          - containerPort: 8000
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: rust
+spec:
+  prefix: /rust/
+  service: rust
