@@ -131,3 +131,47 @@ metadata:
 spec:
   prefix: /go/
   service: go
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java
+  labels:
+    app: java
+spec:
+  selector:
+    app: java
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java
+  labels:
+    app: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java
+  template:
+    metadata:
+      labels:
+        app: java
+    spec:
+      containers:
+      - name: java
+        image: {{image "../services/java/Dockerfile"}}
+        ports:
+          - containerPort: 8000
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: java
+spec:
+  prefix: /java/
+  service: java

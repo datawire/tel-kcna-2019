@@ -1,3 +1,7 @@
 telepresence.log
 *cache*
 venv
+target
+.classpath
+.project
+.settings
