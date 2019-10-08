@@ -42,3 +42,4 @@ metadata:
 spec:
   prefix: /__NAME__/
   service: __NAME__
+  timeout_ms: 300000
