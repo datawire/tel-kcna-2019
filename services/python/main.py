@@ -9,14 +9,15 @@ from bottle import response, route, run
 def getValue() -> bytes:
     try:
         with urlopen("http://base") as f:
-            return f.read()
+            value = f.read()
     except Exception as exc:
-        return str(exc).encode("utf-8")
+        value = str(exc).encode("utf-8")
+    return value
 
 
 @route("/")
 def main():
-    value = getValue()
+    value = b"salty" + getValue()
     hashcode = codecs.encode(value, "base64").decode("utf-8").strip()
     lines = [
         "[ Hello KubeCon NA 2019! ]",
