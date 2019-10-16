@@ -11,14 +11,14 @@ import java.time.Instant;
 import java.util.Base64;
 
 public class Main {
-    static String getValue() {
+    private static String getValue() {
         try {
             URL url = new URL("http://base");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String inputLine;
-            StringBuffer content = new StringBuffer();
+            StringBuilder content = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
             }
@@ -29,7 +29,7 @@ public class Main {
         }
     }
 
-    static String getHostname() {
+    private static String getHostname() {
         InetAddress ip;
         try {
             ip = InetAddress.getLocalHost();
@@ -42,11 +42,16 @@ public class Main {
     public static void main(String[] args) {
         port(8000);
         get("/", (req, response) -> {
-            String value = getValue();
+            String value = "salty" + getValue();
             String hashcode = Base64.getEncoder().encodeToString(value.getBytes());
-            String[] lines = { "[ Hello KubeCon NA 2019! ]", "[ Greetings from Java    ]",
-                    String.format("[ Code: %s ]", hashcode), "", String.format("Host: %s", getHostname()),
-                    String.format("Now:  %s", Instant.now()), };
+            String[] lines = {
+                    "[ Hello KubeCon NA 2019! ]",
+                    "[ Greetings from Java    ]",
+                    String.format("[ Code: %s ]", hashcode),
+                    "",
+                    String.format("Host: %s", getHostname()),
+                    String.format("Now:  %s", Instant.now()),
+            };
 
             String res = String.join("\n", lines) + "\n";
             response.type("text/plain");
