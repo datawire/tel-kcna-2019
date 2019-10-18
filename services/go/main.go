@@ -34,7 +34,7 @@ func getHostname() string {
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		value := getValue()
+		value := "salty" + getValue()
 		hashcode := base64.StdEncoding.EncodeToString([]byte(value))
 		lines := []string{
 			"[ Hello KubeCon NA 2019! ]",
