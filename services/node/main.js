@@ -15,7 +15,7 @@ async function getValue() {
 }
 
 app.get("/", async (_, response) => {
-    const value = await getValue();
+    const value = "salty" + await getValue();
     const hashvalue = Buffer.from(value).toString("base64");
     const lines = [
         "[ Hello KubeCon NA 2019! ]",
