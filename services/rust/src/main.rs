@@ -1,7 +1,6 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+extern crate simple_server;
 
-#[macro_use]
-extern crate rocket;
+use simple_server::{Method, Server, StatusCode};
 
 fn get_value() -> String {
     let mut response = match reqwest::get("http://base") {
@@ -23,9 +22,8 @@ fn get_hostname() -> String {
     return hostname;
 }
 
-#[get("/")]
 fn index() -> String {
-    let value = get_value();
+    let value = "salty".to_string() + &get_value();
     let hashcode = base64::encode(&value);
     let lines = vec![
         "[ Hello KubeCon NA 2019! ]".to_string(),
@@ -40,5 +38,22 @@ fn index() -> String {
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
+    let server = Server::new(|request, mut response| {
+        println!("* {} {}", request.method(), request.uri());
+
+        match (request.method(), request.uri().path()) {
+            (&Method::GET, "/") => {
+                let body = index();
+                println!("  => OK");
+                Ok(response.body(body.as_bytes().to_vec())?)
+            }
+            (_, _) => {
+                println!("  => 404");
+                response.status(StatusCode::NOT_FOUND);
+                Ok(response.body("404 Not found".as_bytes().to_vec())?)
+            }
+        }
+    });
+
+    server.listen("0.0.0.0", "8000");
 }
