@@ -1,19 +1,4 @@
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    service: ambassador-admin
-  name: ambassador-admin
-spec:
-  type: NodePort
-  ports:
-  - name: ambassador-admin
-    port: 8877
-    targetPort: 8877
-  selector:
-    service: ambassador
----
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -314,5 +299,6 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
+      nodePort: 30080
   selector:
     service: ambassador
