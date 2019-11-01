@@ -42,7 +42,10 @@ public class Main {
     public static void main(String[] args) {
         port(8000);
         get("/", (req, response) -> {
+            // Get information from other services
             String value = "salty" + getValue();
+
+            // Perform some computation
             String hashcode = Base64.getEncoder().encodeToString(value.getBytes());
             String[] lines = {
                     "[ Hello KubeCon NA 2019! ]",
@@ -52,8 +55,9 @@ public class Main {
                     String.format("Host: %s", getHostname()),
                     String.format("Now:  %s", Instant.now()),
             };
-
             String res = String.join("\n", lines) + "\n";
+
+            // Return the result
             response.type("text/plain");
             return res;
         });
