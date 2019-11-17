@@ -57,7 +57,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8000
+      targetPort: 9900
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -80,6 +80,17 @@ spec:
         image: {{image "../services/python/Dockerfile"}}
         ports:
           - containerPort: 8000
+      - name: agent
+        image: quay.io/datawire/ambassador-pro:app-sidecar-0.1.1-rc1
+        ports:
+          - containerPort: 9900
+        env:
+          - name: APPNAME
+            value: python
+          - name: APPPORT
+            value: "8000"
+          - name: AMBASSADOR_LICENSE_KEY
+            value: {{env "AMBASSADOR_LICENSE_KEY"}}
 ---
 apiVersion: getambassador.io/v1
 kind: Mapping

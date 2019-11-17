@@ -9,6 +9,19 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+case $2 in
+    intercept)
+        template=service_intercept.yaml.template
+        ;;
+    plain)
+        template=service_plain.yaml.template
+        ;;
+    *)
+        echo Please specify intercept or plain for the type of service.
+        exit 1
+        ;;
+esac
+
 set -o nounset
 
 name=$1
@@ -18,4 +31,4 @@ if [ \! -f "services/${name}/Dockerfile" ]; then
     exit 1
 fi
 
-sed "s/__NAME__/${name}/g" < k8s/one_service.yaml.template >> k8s/20-services.yaml
+sed "s/__NAME__/${name}/g" < "k8s/${template}" >> k8s/20-services.yaml
