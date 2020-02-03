@@ -42,7 +42,7 @@ metadata:
   name: base
 spec:
   prefix: /base/
-  service: base
+  service: base.default
   timeout_ms: 300000
 ---
 apiVersion: v1
@@ -98,7 +98,7 @@ metadata:
   name: python
 spec:
   prefix: /python/
-  service: python
+  service: python.default
   timeout_ms: 300000
 ---
 apiVersion: v1
@@ -143,7 +143,7 @@ metadata:
   name: go
 spec:
   prefix: /go/
-  service: go
+  service: go.default
   timeout_ms: 300000
 ---
 apiVersion: v1
@@ -188,7 +188,7 @@ metadata:
   name: java
 spec:
   prefix: /java/
-  service: java
+  service: java.default
   timeout_ms: 300000
 ---
 apiVersion: v1
@@ -233,7 +233,7 @@ metadata:
   name: node
 spec:
   prefix: /node/
-  service: node
+  service: node.default
   timeout_ms: 300000
 ---
 apiVersion: v1
@@ -278,5 +278,5 @@ metadata:
   name: rust
 spec:
   prefix: /rust/
-  service: rust
+  service: rust.default
   timeout_ms: 300000
